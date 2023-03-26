@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_app/widgets/shop_drawer.dart';
 
 import '../widgets/products_grid.dart';
 import '../widgets/badge.dart';
@@ -14,6 +15,7 @@ enum FilterOptions {
 }
 
 class ProductsOverviewScreen extends StatefulWidget {
+  static const routeName = '';
   const ProductsOverviewScreen({super.key});
 
   @override
@@ -72,6 +74,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
           ),
         ],
       ),
+      drawer: const ShopDrawer(),
       body: ProductsGrid(_showOnlyFavorites),
     );
   }
