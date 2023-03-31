@@ -70,6 +70,10 @@ class Products with ChangeNotifier {
         'https://shop-app-adafa-default-rtdb.firebaseio.com/products.json');
     try {
       final response = await http.get(url);
+      if (json.decode(response.body) == null) {
+        return;
+      }
+
       final data = json.decode(response.body) as Map<String, dynamic>;
       final List<Product> loadedProduct = [];
       data.forEach((productId, productData) {
