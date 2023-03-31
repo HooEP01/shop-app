@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'product.dart';
+import '../models/http_exception.dart';
 
 class Products with ChangeNotifier {
   List<Product> _items = [
@@ -138,24 +139,22 @@ class Products with ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteProduct(String id) {
+  Future<void> deleteProduct(String id) async {
     // optimizing update
     final url = Uri.parse(
-        'https://shop-app-adafa-default-rtdb.firebaseio.com/products/$id.json');
+        'https://shop-app-adafa-default-rtdb.firebaseio.com/products/$id');
     final existingProductIndex = _items.indexWhere((prod) => prod.id == id);
     Product? existingProduct = _items[existingProductIndex];
-    http.delete(url).then((response) {
-      if (response.statusCode >= 400) {
-        _items.insert(existingProductIndex, existingProduct as Product);
-      }
-      existingProduct = null;
-    }).catchError((error) {
-      _items.insert(existingProductIndex, existingProduct as Product);
-      throw error;
-    });
+    final response = await http.delete(url);
     _items.removeAt(existingProductIndex);
-
-    // _items.removeWhere((prod) => prod.id == id);
     notifyListeners();
+
+    if (response.statusCode >= 400) {
+      _items.insert(existingProductIndex, existingProduct);
+      notifyListeners();
+      throw HttpException('Could not delete product');
+    }
+    existingProduct = null;
+    // _items.removeWhere((prod) => prod.id == id);
   }
 }
