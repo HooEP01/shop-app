@@ -150,6 +150,7 @@ class Products with ChangeNotifier {
     final existingProductIndex = _items.indexWhere((prod) => prod.id == id);
     Product? existingProduct = _items[existingProductIndex];
     final response = await http.delete(url);
+
     _items.removeAt(existingProductIndex);
     notifyListeners();
 

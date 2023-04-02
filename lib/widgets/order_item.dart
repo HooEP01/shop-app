@@ -21,6 +21,7 @@ class _OrderItemState extends State<OrderItem> {
       child: Column(
         children: <Widget>[
           ListTile(
+            // leading: Icon(Icons.add),
             title: Text('RM ${widget.order.amount}'),
             subtitle: Text(
               DateFormat('dd MM yyyy hh:mm').format(widget.order.dateTime),

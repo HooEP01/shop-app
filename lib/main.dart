@@ -7,6 +7,7 @@ import './screens/cart_screen.dart';
 import './screens/order_screen.dart';
 import './screens/user_products_screen.dart';
 import './screens/edit_product_screen.dart';
+import './screens/auth_screen.dart';
 
 import './providers/products.dart';
 import './providers/cart.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Lato',
         ),
         home: const ProductsOverviewScreen(),
+        // home: const AuthScreen(),
         routes: {
           ProductsOverviewScreen.routeName: (ctx) =>
               const ProductsOverviewScreen(),
