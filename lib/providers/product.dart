@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import '../models/http_exception.dart';
 
 class Product with ChangeNotifier {
   final String id;
@@ -25,15 +24,15 @@ class Product with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> toggleFavoriteStatus() async {
+  Future<void> toggleFavoriteStatus(String authToken, String userId) async {
     final oldStatus = isFavorite;
     isFavorite = !isFavorite;
     notifyListeners();
     final url = Uri.parse(
-        'https://shop-app-adafa-default-rtdb.firebaseio.com/products/$id.json');
+        'https://shop-app-adafa-default-rtdb.firebaseio.com/userFavorites/$userId/$id.json?auth=$authToken');
 
     try {
-      final response = await http.patch(
+      final response = await http.put(
         url,
         body: json.encode({
           'isFavorite': isFavorite,
